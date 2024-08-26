@@ -53,13 +53,18 @@ function Home() {
                         <div className='text-4xl text-center font-extrabold mb-4 font-sans text-yellow-500 text-pretty'>
                             Welcome {user}
                         </div>
-                        <div className='flex flex-wrap'>
-                            {posts.map((post) => (
-                                <div key={post.$id} className='p-2 w-1/4'>
-                                    <PostCard {...post} />
+                        <div className='flex flex-wrap justify-center gap-4'>
+                    {
+                        posts.map((post,index)=>{
+                            const translateYValue = `translate-y-${index * 4}`;
+                              return (
+                                <div key={post.$id} className={`bg-white shadow-lg rounded-lg overflow-hidden w-72 h-auto transform translate-y-${translateYValue}`}>
+                                  <PostCard {...post}/>
                                 </div>
-                            ))}
-                        </div>
+                              )
+                        })
+                    }
+                    </div>
                     </Container>
                 </div>
             )

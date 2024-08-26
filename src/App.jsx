@@ -24,7 +24,7 @@ function App() {
         )
   },[])
    return !loading?(
-    <div className="min-h-screen flex flex-wrap content-between bg-[url('https://img.freepik.com/premium-vector/landing-page-development-abstract-concept-vector-illustration_107173-53476.jpg?w=740')] ">
+    <div className="min-h-screen flex flex-wrap content-between bg-[url('https://img.freepik.com/premium-vector/landing-page-development-abstract-concept-vector-illustration_107173-53476.jpg?w=740')] bg-fixed">
       <div className='w-full block'>
         <Header/>
         <main>

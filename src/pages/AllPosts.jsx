@@ -10,21 +10,26 @@ function AllPosts() {
             setPosts(posts.documents)
         }
     })
-    if (posts.length===0) {
+    if (posts.length === 0) {
         return <div className=' w-full py-8 flex items-center justify-center'>
-        <h1 className='font-bold text-4xl h-[300px] text-center'>No Posts Yet</h1>       
+            <h1 className='font-bold text-4xl h-[300px] text-center'>No Posts Yet</h1>
         </div>
     }
     else {
         return (
             <div className='w-full py-8'>
                 <Container>
-                    <div className='flex flex-wrap'>
-                        {posts.map((post) => (
-                            <div key={post.$id} className='p-2 w-1/4'>
-                                <PostCard {...post} />
-                            </div>
-                        ))}
+                    <div className='flex flex-wrap justify-center gap-4'>
+                    {
+                        posts.map((post,index)=>{
+                            const translateYValue = `translate-y-${index * 4}`;
+                              return (
+                                <div key={post.$id} className={`bg-white shadow-lg rounded-lg overflow-hidden w-72 h-80 transform translate-y-${translateYValue}`}>
+                                  <PostCard {...post}/>
+                                </div>
+                              )
+                        })
+                    }
                     </div>
                 </Container>
             </div>
@@ -32,3 +37,5 @@ function AllPosts() {
     }
 }
 export default AllPosts
+
+

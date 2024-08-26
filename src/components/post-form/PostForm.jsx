@@ -80,7 +80,7 @@ export default function PostForm({ post })
  }
  else{
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap bg-yellow-500 p-2 rounded-xl">
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap p-2 rounded-xl">
             <div className="w-2/3 px-2">
                 <Input
                     label="Title :"

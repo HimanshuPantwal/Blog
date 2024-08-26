@@ -34,7 +34,7 @@ function Header() {
     }
   ]
   return (
-    <header className="py-3 shadow bg-cyan-700 border border-purple-700 hover:border-black hover:border-b-2 hover:duration-300">
+    <header className="py-3 hover:duration-300 sticky top-0 z-50">
       <Container>
         <nav className='flex'>
           <div className='mr-4'>
@@ -48,7 +48,7 @@ function Header() {
               navItems.map((item) => {
                 return item.active ? <li key={item.name}>
                   <Button children={item.name}  onClick={() => navigate(item.slug)} className='inline-block px-6 py-2 duration-200 hover:bg-green-100 rounded-2xl hover:scale-105'
-                    bgColor={`bg-white/90`}
+                    bgColor={`bg-transparent`}
                     textColor='text-green-800'
                   />
                 </li> : null

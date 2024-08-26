@@ -7,17 +7,19 @@ import 'aos/dist/aos.css'
 function PostCard({
   $id,
   title,
-  featuredImage
+  featuredImage,
+  content
 }) {
+  let newContent=content.slice(3)
+  newContent=newContent.slice(0,-10)
   return (
     <Link to={`/post/${$id}`}>
-      <div className='w-full bg-white  h-[350px] flex flex-col justify-start items-center space-y-3 hover:scale-105 hover:duration-500  outline outline-blue-900 outline-1 mx-2'>
-        <div className='w-full h-60 justify-center mb-4 flex' >
-          <img src={appwriteService.getFilePreview(featuredImage)} alt="title"
-            className=' w-full h-60 duration-300'
-          ></img>
-        </div>
-        <h2 className='text-xl font-bold w-full overflow-hidden line-clamp-2 text-center p-2'>{title}</h2>
+        <img src={appwriteService.getFilePreview(featuredImage)} alt="title"
+          className=' w-full h-40 object-cover'
+        ></img>
+      <div className="p-4">
+        <h3 className="text-lg font-bold mb-2 line-clamp-3">{title}</h3>
+        <div className="text-sm text-gray-700 line-clamp-2">{newContent}</div>
       </div>
     </Link>
   )
