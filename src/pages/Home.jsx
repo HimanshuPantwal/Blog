@@ -31,7 +31,7 @@ function Home() {
                 <Container>
                     <div className="flex  justify-around h-screen p-4 spac-x-4" data-aos='fade-up'>
                         <div className="w-1/2 text-center p-6  rounded-lg shadow-lg bg-white flex flex-col items-center justify-center">
-                            <div className='text-4xl font-extrabold text-gray-800 mb-4 font-serif  text-wrap'>
+                            <div className='text-4xl font-extrabold text-gray-800 mb-4 font-serif  text-wrap outline-2 outline-black'>
                                 Welcome {user}
                             </div>
                             <div className='text-4xl font-extrabold text-gray-800 mb-4 font-serif  text-wrap  

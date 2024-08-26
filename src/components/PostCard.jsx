@@ -1,24 +1,24 @@
 import React from 'react'
 import appwriteService from '../appwrite/config'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 
 function PostCard({
-    $id,
-    title,
-    featuredImage
+  $id,
+  title,
+  featuredImage
 }) {
   return (
     <Link to={`/post/${$id}`}>
-       <div className='w-full bg-gray-100 rounded-xl p-4 h-full flex flex-col justify-center items-center hover:duration-200 hover:scale-110' data-aos='fade-up'>
-        <div className='w-full justify-center mb-4 flex p-4 bg-green-400' >
-            <img src={appwriteService.getFilePreview(featuredImage)} alt="title"
-            className='rounded-xl w-11/12 h-60'
-            ></img>
+      <div className='w-full bg-white  h-[350px] flex flex-col justify-start items-center space-y-3 hover:scale-105 hover:duration-500  outline outline-blue-900 outline-1 mx-2'>
+        <div className='w-full h-60 justify-center mb-4 flex' >
+          <img src={appwriteService.getFilePreview(featuredImage)} alt="title"
+            className=' w-full h-60 duration-300'
+          ></img>
         </div>
-        <h2 className='text-xl font-bold'>{title}</h2>
-       </div>
+        <h2 className='text-xl font-bold w-full overflow-hidden line-clamp-2 text-center p-2'>{title}</h2>
+      </div>
     </Link>
   )
 }
