@@ -20,6 +20,7 @@ export default function PostForm({ post })
     const navigate = useNavigate();
     const userData = useSelector((state) => {return state.auth.userData});
     console.log(userData)
+    
     const submit = async (data) => {
         console.log(userData.$id)
         if (post) 
@@ -80,18 +81,20 @@ export default function PostForm({ post })
  }
  else{
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap p-2 rounded-xl">
+        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap p-2 rounded-xl bg-gray-300">
             <div className="w-2/3 px-2">
                 <Input
                     label="Title :"
                     placeholder="Title"
                     className="mb-4"
+                    labelclassName="font-bold"
                     {...register("title", { required: true })}
                 />
                 <Input
                     label="Slug :"
                     placeholder="Slug"
                     className="mb-4"
+                    labelclassName="font-bold"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
@@ -104,6 +107,7 @@ export default function PostForm({ post })
                     label="Featured Image :"
                     type="file"
                     className="mb-4"
+                    labelclassName="font-bold"
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />

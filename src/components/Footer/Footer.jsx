@@ -74,7 +74,7 @@ function Footer() {
                     className=" text-base font-medium text-cyan-500 hover:text-gray-500"
                     to="/"
                   >
-                    Help
+                    Privacy Policy
                   </Link>
                 </li>
                 <li className="mb-4">

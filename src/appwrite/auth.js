@@ -54,6 +54,25 @@ export class AuthService {
             console.log("Appwrite serive :: logout :: error", error);
         }
     }
+    async googleLogin(){
+        try{
+            this.account.createOAuth2Session(
+                'google','http://localhost:5173/',
+                'http://localhost:5173/fail'
+            )
+        }
+     catch(e){
+        console.log(error)
+     }
+    }
+    async getGoogleUser(){
+        try{
+        const response=await this.account.get();
+        return response
+        } catch(e){
+            console.log("Google SignIn error",e);
+        }
+    }
 }
 
 const authService = new AuthService();

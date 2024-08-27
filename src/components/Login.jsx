@@ -25,7 +25,12 @@ function Login() {
             setError(error.message)
         }
     }
-
+    
+ const handleGoogleLogin=async (e)=>{
+    e.preventDefault();
+    authService.googleLogin()
+    navigate('/callback')
+ }
     return (
         <div
             className='flex items-center w-11/12 mx-4 my-8'
@@ -73,6 +78,7 @@ function Login() {
                             type="submit"
                             className="w-full"
                         >Sign in</Button>
+                        <button type='submit' onClick={handleGoogleLogin}>Sign in with Google</button>
                     </div>
                 </form>
             </div>

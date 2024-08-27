@@ -58,7 +58,7 @@ function Home() {
                         posts.map((post,index)=>{
                             const translateYValue = `translate-y-${index * 4}`;
                               return (
-                                <div key={post.$id} className={`bg-white shadow-lg rounded-lg overflow-hidden w-72 h-auto transform translate-y-${translateYValue}`}>
+                                <div key={post.$id} className={`bg-white shadow-lg rounded-lg overflow-hidden w-72 h-80 transform translate-y-${translateYValue}`}>
                                   <PostCard {...post}/>
                                 </div>
                               )

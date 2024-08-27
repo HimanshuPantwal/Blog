@@ -11,7 +11,7 @@ function PostCard({
   content
 }) {
   let newContent=content.slice(3)
-  newContent=newContent.slice(0,-10)
+  newContent=newContent.slice(0,-4)
   return (
     <Link to={`/post/${$id}`}>
         <img src={appwriteService.getFilePreview(featuredImage)} alt="title"

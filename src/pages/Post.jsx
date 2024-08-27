@@ -31,6 +31,8 @@ export default function Post() {
             }
         });
     };
+    let newContent=post?.content.slice(3)
+    newContent=newContent.slice(0,-4)
         return post ? (
             <div className="p-16">
                 <Container>
@@ -54,9 +56,10 @@ export default function Post() {
                             </div>
                         )}
                     </div>
+                    {console.log(post.content)}
                     <h1 className="text-2xl font-bold w-full text-center bg-green-200 p-2">{post.title}</h1>
                     <div className="browser-css text-center w-full bg-green-200 p-2">
-                        {parse(post.content)}
+                        {newContent}
                     </div>
                 </Container>
             </div>
