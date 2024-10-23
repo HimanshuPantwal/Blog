@@ -1,85 +1,100 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import appwriteService from "../appwrite/config";
-import authService from '../appwrite/auth';
-import { Container, PostCard } from '../components';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom'
-import Aos from 'aos'
-import 'aos/dist/aos.css'
+import authService from "../appwrite/auth";
+import { Container, PostCard } from "../components";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Aos from "aos";
+import "aos/dist/aos.css";
+
 function Home() {
-    const [posts, setPosts] = useState([])
-    const [user, setUser] = useState('');
-    const authStatus = useSelector(state => state.auth.status)
+    const [posts, setPosts] = useState([]);
+    const [user, setUser] = useState("");
+    const authStatus = useSelector((state) => state.auth.status);
+
     useEffect(() => {
         appwriteService.getPosts().then((posts) => {
             if (posts) {
-                setPosts(posts.documents)
+                setPosts(posts.documents);
             }
-        })
-    }, [])
+        });
+    }, []);
+
     useEffect(() => {
         authService.getCurrentUser().then((resp) => {
-            setUser(resp.name)
-        })
-    }, [authStatus])
+            setUser(resp.name);
+        });
+    }, [authStatus]);
+
     useEffect(() => {
-        Aos.init({ duration: 2000 })
-    })
+        Aos.init({ duration: 2000 });
+    }, []);
+
     if (authStatus && posts.length === 0) {
         return (
-            <div className="w-full py-8 text-center">
+            <div className="w-full py-8 text-center min-h-screen bg-gradient-to-b from-blue-50 to-blue-200">
                 <Container>
-                    <div className="flex  justify-around h-screen p-4 spac-x-4" data-aos='fade-up'>
-                        <div className="w-1/2 text-center p-6  rounded-lg shadow-lg bg-white flex flex-col items-center justify-center">
-                            <div className='text-4xl font-extrabold text-gray-800 mb-4 font-serif  text-wrap outline-2 outline-black'>
-                                Welcome {user}
+                    <div className="flex justify-center items-center h-screen p-4 space-x-4">
+                        <div className="w-3/4 md:w-1/2 text-center p-8 rounded-lg shadow-lg bg-white flex flex-col items-center justify-center">
+                        
+                            <div className="text-5xl font-extrabold text-gray-900 mb-4 font-serif">
+                                Welcome {user.toUpperCase()}
                             </div>
-                            <div className='text-4xl font-extrabold text-gray-800 mb-4 font-serif  text-wrap  
-                               '>Share your stories, express your ideas, and connect with the world—one blog at a time.</div>
-                            <Link to='/add-post' className="text-2xl font-bold hover:text-gray-500">
+                            <img src="https://img.freepik.com/free-vector/organic-flat-blog-post-illustration-with-people_23-2148955260.jpg?t=st=1729662234~exp=1729665834~hmac=720c23262f4b01ac385297eb0b1e1b020f4755fef211b5c5ea378c962fefbde4&w=996" />
+                            <p className="text-2xl text-gray-700 mb-6 font-serif">
+                                Share your stories, express your ideas, and connect with the world—one blog at a time.
+                            </p>
+                            <Link to="/add-post" className="text-xl font-semibold text-indigo-600 hover:text-indigo-400 transition-colors">
                                 Click here to write your first blog
                             </Link>
                         </div>
                     </div>
                 </Container>
             </div>
-        )
-    }
-    else
-        if (authStatus && posts.length >= 1) {
-            return (
-                <div className='w-full py-8'>
-                    <Container>
-                        <div className='text-4xl text-center font-extrabold mb-4 font-sans text-yellow-500 text-pretty'>
-                            Welcome {user}
+        );
+    } else if (authStatus && posts.length >= 1) {
+        return (
+            <div className="w-full py-8 min-h-screen bg-gradient-to-b from-blue-50 to-blue-200 ">
+                <Container>
+                    <div className="w-full relative p-4 flex items-center justify-center" data-aos="flip-left">
+                        <div className="text-4xl text-center font-extrabold font-serif absolute top-20  w-full">
+                            WELCOME {user.toUpperCase()}
                         </div>
-                        <div className='flex flex-wrap justify-center gap-4'>
-                    {
-                        posts.map((post,index)=>{
-                            const translateYValue = `translate-y-${index * 4}`;
-                              return (
-                                <div key={post.$id} className={`bg-white shadow-lg rounded-lg overflow-hidden w-72 h-80 transform translate-y-${translateYValue}`}>
-                                  <PostCard {...post}/>
-                                </div>
-                              )
-                        })
-                    }
+                        <img src="https://img.freepik.com/free-vector/organic-flat-blog-post-illustration-with-people_23-2148955260.jpg?t=st=1729662234~exp=1729665834~hmac=720c23262f4b01ac385297eb0b1e1b020f4755fef211b5c5ea378c962fefbde4&w=996" />
                     </div>
-                    </Container>
-                </div>
-            )
-        }
-        else
-            if (!authStatus) {
-                return <div className="flex  justify-around h-screen p-4 spac-x-4" data-aos='fade-up'>
-                    <div className="w-1/2 text-center p-6  rounded-lg shadow-lg bg-white flex flex-col items-center justify-center">
-                        <div className='text-4xl font-extrabold text-gray-800 mb-4 font-serif  text-wrap  
-               '>Share your stories, express your ideas, and connect with the world—one blog at a time.</div>
-                        <Link to='/login' className="text-2xl font-bold hover:text-gray-500">
-                            Login to read posts
-                        </Link>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 w-full p-2" data-aos='fade-left'>
+                        {posts.map((post, index) => (
+                            <div
+                                key={post.$id}
+                                className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-110 duration-200"
+                                data-aos="fade-down"
+                                style={{ transitionDelay: `${index * 100}ms` }}
+                            >
+                                <PostCard {...post} />
+                            </div>
+                        ))}
                     </div>
-                </div>
-            }
+                </Container>
+            </div>
+        );
+    } else if (!authStatus) {
+        return (
+            <div className="w-full py-8 text-center min-h-screen bg-gradient-to-b from-blue-50 to-blue-200">
+                <Container>
+                    <div className="flex justify-center items-center h-screen p-4 space-x-4" data-aos="fade-up">
+                        <div className="w-3/4 md:w-1/2 text-center p-8 rounded-lg shadow-lg bg-white flex flex-col items-center justify-center">
+                            <p className="text-3xl font-extrabold text-gray-900 mb-6 font-serif">
+                                Share your stories, express your ideas, and connect with the world—one blog at a time.
+                            </p>
+                            <Link to="/login" className="text-xl font-semibold text-indigo-600 hover:text-indigo-400 transition-colors">
+                                Login to read posts
+                            </Link>
+                        </div>
+                    </div>
+                </Container>
+            </div>
+        );
+    }
 }
-export default Home
+
+export default Home;

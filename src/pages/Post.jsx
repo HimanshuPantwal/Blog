@@ -2,27 +2,34 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
-import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 
 export default function Post() {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const [post, setPost] = useState(null);
     const { slug } = useParams();
     const navigate = useNavigate();
 
-    const userData = useSelector((state) => { return state.auth.userData });
+    const userData = useSelector((state) => state.auth.userData);
+
     useEffect(() => {
         if (slug) {
             appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
+                if (post) {
+                    setPost(post);
+                } else {
+                    navigate("/");
+                }
+            }).catch((error) => {
+                console.error("Error fetching post:", error);
             });
-        } else navigate("/");
+        } else {
+            navigate("/");
+        }
     }, [slug, navigate]);
-    console.log("email", userData?.$id)
-    console.log("post", post?.userId)
+
     const isAuthor = post && userData ? post?.userId === userData?.$id : false;
+
     const deletePost = () => {
         appwriteService.deletePost(post.$id).then((status) => {
             if (status) {
@@ -31,39 +38,50 @@ export default function Post() {
             }
         });
     };
-    let newContent=post?.content.slice(3)
-    newContent=newContent.slice(0,-4)
-        return post ? (
-            <div className="p-16">
-                <Container>
-                    <div className="w-full flex justify-center relative border p-2 bg-white/90">
-                        <img
-                            src={appwriteService.getFilePreview(post.featuredImage)}
-                            alt={post.title}
-                            className="rounded-xl size-[400px]"
-                        />
 
-                        {isAuthor && (
-                            <div className="absolute right-6 top-6">
-                                <Link to={`/edit-post/${post.$id}`}>
-                                    <Button bgColor="bg-green-500" className="mr-3">
-                                        Edit
-                                    </Button>
-                                </Link>
-                                <Button bgColor="bg-red-500" onClick={deletePost}>
-                                    Delete
+    return post ? (
+        <div className="p-16 bg-gradient-to-br bg-white min-h-screen text-white animate-fadeIn">
+            <Container>
+                <div className="w-full flex justify-center relative p-6 bg-white/10 rounded-xl transition-transform duration-300 hover:scale-105 border-none outline-none">
+                    <img
+                        src={appwriteService.getFilePreview(post.featuredImage)}
+                        alt={post.title}
+                        className="rounded-xl w-[400px] transform transition-transform duration-300 hover:scale-110"
+                    />
+
+                    {isAuthor && (
+                        <div className="absolute right-6 top-6 flex space-x-3">
+                            <Link to={`/edit-post/${post.$id}`}>
+                                <Button className="bg-gradient-to-r from-green-400 to-green-600 text-white py-2 px-4 rounded-full shadow-md transform transition-transform hover:scale-105 hover:shadow-lg duration-300">
+                                    Edit
                                 </Button>
-                            </div>
-                        )}
-                    </div>
-                    {console.log(post.content)}
-                    <h1 className="text-2xl font-bold w-full text-center bg-green-200 p-2">{post.title}</h1>
-                    <div className="browser-css text-center w-full bg-green-200 p-2">
-                        {newContent}
-                    </div>
-                </Container>
-            </div>
-        ) :  <div className=' w-full py-8 flex items-center justify-center'>
-        <h1 className='font-bold text-4xl h-[300px] text-center'>No Post Yet</h1>       
+                            </Link>
+                            <Button
+                                className="bg-gradient-to-r from-red-400 to-red-600 text-white py-2 px-4 rounded-full shadow-md transform transition-transform hover:scale-105 hover:shadow-lg duration-300"
+                                onClick={deletePost}
+                            >
+                                Delete
+                            </Button>
+                        </div>
+                    )}
+                </div>
+                <h1 className="text-3xl font-extrabold w-full text-center p-4 mt-8 rounded-xl outline-none border-none transition-colors text-black">
+                    {post.title}
+                </h1>
+
+                {post?.content ? (
+                    <div
+                        className="browser-css text-center w-full p-6 rounded-xl text-lg shadow-lg leading-relaxed text-black"
+                        dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
+                ) : (
+                    <p className="text-center text-gray-500">Content not available</p>
+                )}
+            </Container>
         </div>
+    ) : (
+        <div className="w-full py-8 flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-700 to-indigo-500 text-white animate-fadeIn">
+            <h1 className="font-bold text-4xl h-[300px] text-center">No Post Yet</h1>
+        </div>
+    );
 }

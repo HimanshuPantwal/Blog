@@ -34,12 +34,12 @@ function Header() {
     }
   ]
   return (
-    <header className="py-3 hover:duration-300 sticky top-0 z-50">
+    <header className="py-3 hover:duration-300 sticky top-0 z-50 bg-[#07acc9]">
       <Container>
         <nav className='flex'>
           <div className='mr-4'>
             <Link to='/'>
-              <Logo width='70px' img='https://tse2.mm.bing.net/th?id=OIG2.QIhi2PI2hl3nhoRJPH1s&w=270&h=270&c=6&r=0&o=5&dpr=1.5&pid=ImgGn' />
+              <Logo width='70px' img='https://img.freepik.com/free-photo/technology-communication-icons-symbols-concept_53876-120314.jpg?t=st=1729663576~exp=1729667176~hmac=14f9707fdcbb325f4f5bfee354c5baf6a3a055bb613da12df61b76c0c414e372&w=740' />
             </Link>
           </div>
 
