@@ -14,15 +14,19 @@ export default function Post() {
 
     useEffect(() => {
         if (slug) {
-            appwriteService.getPost(slug).then((post) => {
-                if (post) {
-                    setPost(post);
-                } else {
-                    navigate("/");
-                }
-            }).catch((error) => {
-                console.error("Error fetching post:", error);
-            });
+            appwriteService
+                .getPost(slug)
+                .then((post) => {
+                    if (post) {
+                        setPost(post);
+                    } else {
+                        navigate("/");
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error fetching post:", error);
+                })
+                .finally(() => setLoading(false));
         } else {
             navigate("/");
         }
@@ -39,10 +43,18 @@ export default function Post() {
         });
     };
 
+    if (loading) {
+        return (
+            <div className="w-full py-8 flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-700 to-indigo-500 text-white">
+                <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div>
+            </div>
+        );
+    }
+
     return post ? (
-        <div className="p-16 bg-gradient-to-br bg-white min-h-screen text-white animate-fadeIn">
+        <div className="p-8 bg-gradient-to-br from-white to-indigo-50 min-h-screen text-black animate-fadeIn">
             <Container>
-                <div className="w-full flex justify-center relative p-6 bg-white/10 rounded-xl transition-transform duration-300 hover:scale-105 border-none outline-none">
+                <div className="w-full flex justify-center relative p-6 bg-white shadow-lg rounded-xl hover:shadow-2xl transition-transform duration-300 transform hover:scale-105">
                     <img
                         src={appwriteService.getFilePreview(post.featuredImage)}
                         alt={post.title}
@@ -52,12 +64,12 @@ export default function Post() {
                     {isAuthor && (
                         <div className="absolute right-6 top-6 flex space-x-3">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button className="bg-gradient-to-r from-green-400 to-green-600 text-white py-2 px-4 rounded-full shadow-md transform transition-transform hover:scale-105 hover:shadow-lg duration-300">
+                                <Button className="bg-gradient-to-r from-green-400 to-green-600 text-white py-2 px-4 rounded-full shadow-md hover:scale-105 transform transition-transform duration-300">
                                     Edit
                                 </Button>
                             </Link>
                             <Button
-                                className="bg-gradient-to-r from-red-400 to-red-600 text-white py-2 px-4 rounded-full shadow-md transform transition-transform hover:scale-105 hover:shadow-lg duration-300"
+                                className="bg-gradient-to-r from-red-400 to-red-600 text-white py-2 px-4 rounded-full shadow-md hover:scale-105 transform transition-transform duration-300"
                                 onClick={deletePost}
                             >
                                 Delete
@@ -65,13 +77,13 @@ export default function Post() {
                         </div>
                     )}
                 </div>
-                <h1 className="text-3xl font-extrabold w-full text-center p-4 mt-8 rounded-xl outline-none border-none transition-colors text-black">
+                <h1 className="text-4xl font-extrabold text-center mt-8 text-gray-800">
                     {post.title}
                 </h1>
 
                 {post?.content ? (
                     <div
-                        className="browser-css text-center w-full p-6 rounded-xl text-lg shadow-lg leading-relaxed text-black"
+                        className="text-center w-full p-8 rounded-xl bg-white shadow-lg leading-relaxed text-gray-800 mt-6"
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
                 ) : (

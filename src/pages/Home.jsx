@@ -83,7 +83,7 @@ function Home() {
                 <Container>
                     <div className="flex justify-center items-center h-screen p-4 space-x-4" data-aos="fade-up">
                         <div className="w-3/4 md:w-1/2 text-center p-8 rounded-lg shadow-lg bg-white flex flex-col items-center justify-center">
-                            <p className="text-3xl font-extrabold text-gray-900 mb-6 font-serif">
+                            <p className="text-3xl font-extrabold text-gray-900 mb-6 font-serif h-[20rem]" data-aos='fade-up'>
                                 Share your stories, express your ideas, and connect with the world—one blog at a time.
                             </p>
                             <Link to="/login" className="text-xl font-semibold text-indigo-600 hover:text-indigo-400 transition-colors">

@@ -4,14 +4,25 @@ import appwriteService from "../appwrite/config";
 
 function AllPosts() {
     const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
-        appwriteService.getPosts([]).then((posts) => {
-            if (posts) {
-                setPosts(posts.documents);
-            }
-        });
-    }, []); 
+        appwriteService.getPosts([])
+            .then((posts) => {
+                if (posts) {
+                    setPosts(posts.documents);
+                }
+            })
+            .finally(() => setLoading(false)); 
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="w-full py-8 flex items-center justify-center">
+                <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12"></div> 
+            </div>
+        );
+    }
 
     if (posts.length === 0) {
         return (
@@ -19,25 +30,25 @@ function AllPosts() {
                 <h1 className="font-bold text-4xl h-[300px] text-center">No Posts Yet</h1>
             </div>
         );
-    } else {
-        return (
-            <div className="w-full py-8 bg-gradient-to-b from-indigo-100 to-indigo-300 min-h-screen">
-                <Container>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                        {posts.map((post, index) => (
-                            <div
-                                key={post.$id}
-                                className="transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl bg-white shadow-lg rounded-xl overflow-hidden"
-                                style={{ transitionDelay: `${index * 100}ms` }} 
-                            >
-                                <PostCard {...post} />
-                            </div>
-                        ))}
-                    </div>
-                </Container>
-            </div>
-        );
     }
+
+    return (
+        <div className="w-full py-8 bg-gradient-to-b from-indigo-100 to-indigo-300 min-h-screen">
+            <Container>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    {posts.map((post, index) => (
+                        <div
+                            key={post.$id}
+                            className="transform transition-transform duration-500 hover:scale-105 hover:shadow-2xl bg-white shadow-lg rounded-xl overflow-hidden"
+                            style={{ transitionDelay: `${index * 100}ms` }}
+                        >
+                            <PostCard {...post} />
+                        </div>
+                    ))}
+                </div>
+            </Container>
+        </div>
+    );
 }
 
 export default AllPosts;
